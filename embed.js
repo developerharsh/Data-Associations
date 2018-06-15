@@ -2,13 +2,6 @@ var mongoose = require("mongoose");
 
 mongoose.connect("mongodb://localhost/blog_demo");
 
-var userSchema= new mongoose.Schema({
-    email: String,
-    name: String
-});
-
-var User = mongoose.model("User",userSchema);
-
 var postSchema= new mongoose.Schema({
     title: String,
     content: String
@@ -16,9 +9,23 @@ var postSchema= new mongoose.Schema({
 
 var Post = mongoose.model("Post",postSchema);
 
-// var newUser = new User({
-//     email: "harsh@gmail",
-//     name: "harsh"
+var userSchema= new mongoose.Schema({
+    email: String,
+    name: String,
+    posts: [postSchema]
+});
+
+var User = mongoose.model("User",userSchema);
+
+
+var newUser = new User({
+    email: "arti@gmail",
+    name: "arti"
+});
+
+// newUser.posts.push({
+//     title: "behaviour",
+//     content: "she is mad"
 // });
 
 // newUser.save(function(err,user){
@@ -30,17 +37,37 @@ var Post = mongoose.model("Post",postSchema);
 //     }
 // });
 
-var newPost = new Post({
-    title: "apples",
-    content: "they are delicious"
-});
+// var newPost = new Post({
+//     title: "apples",
+//     content: "they are delicious"
+// });
 
-newPost.save(function(err,post){
+// newPost.save(function(err,post){
+//     if(err){
+//         console.log(err);
+
+//     }else{
+//         console.log(post);
+//     }
+// });
+
+User.findOne({name:"arti"},function(err,user){
     if(err){
         console.log(err);
 
     }else{
-        console.log(post);
+        user.posts.push({
+            title:"looks",
+            content: "average"
+        });
+
+        user.save(function(err,user){
+            if(err){
+                console.log(err);
+            }else{
+                console.log(user);
+            }
+        });
     }
 });
 
