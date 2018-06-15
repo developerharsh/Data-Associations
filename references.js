@@ -2,23 +2,9 @@ var mongoose = require("mongoose");
 
 mongoose.connect("mongodb://localhost/blog_demo_2");
 
-var postSchema= new mongoose.Schema({
-    title: String,
-    content: String
-});
+var Post = require("./models/post.js");
 
-var Post = mongoose.model("Post",postSchema);
-
-var userSchema= new mongoose.Schema({
-    email: String,
-    name: String,
-    posts: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Post"
-    }]
-});
-
-var User = mongoose.model("User",userSchema);
+var User = require("./models/user.js");
 
 // User.create({
 //     email: "harsh@gmail.com",
@@ -27,7 +13,7 @@ var User = mongoose.model("User",userSchema);
 
 // Post.create({
 //     title: "bananas",
-//     name: "they are delicious"
+//     content: "they are delicious"
 // }, function(err,post){
 //     if(err){
 //         console.log(err);
@@ -49,14 +35,14 @@ var User = mongoose.model("User",userSchema);
 //     }
 // });
 
-User.findOne({name: "harsh"}).populate("posts").exec(function(err,user){
-    if(err){
+// User.findOne({name: "harsh"}).populate("posts").exec(function(err,user){
+//     if(err){
 
-        console.log(err);
-    }else{
-        console.log(user);
-    }
-});
+//         console.log(err);
+//     }else{
+//         console.log(user);
+//     }
+// });
 
 
 
